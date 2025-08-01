@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8">
+  <h2 class="text-2xl font-semibold mb-4">{{ "Edit" if user else "Add" }} User</h2>
+  <form method="post"
+        action="{{ user
+                  and '/users/update/' + user.uu_id
+                  or '/register' }}"
+        class="space-y-4">
+    {% if user %}
+      <input type="hidden" name="current_uuid" value="{{ current_uuid }}">
+    {% endif %}
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Name</label>
+      <input type="text" name="name"
+             value="{{ user.name if user else '' }}"
+             {% if user %}readonly{% endif %}
+             class="w-full border-gray-300 rounded bg-gray-100 {% if user %}cursor-not-allowed{% endif %}">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Type</label>
+      <select name="type"
+              class="w-full border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500">
+        {% for t in ["seller","buyer","distributor","wholesaler","retailer","admin","supplier","reseller","agent","partner"] %}
+          <option value="{{ t }}"
+                  {% if user and user.type==t %}selected{% endif %}>
+            {{ t|capitalize }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1">Location</label>
+      <input type="text" name="location"
+             value="{{ user.location if user else '' }}"
+             class="w-full border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500">
+    </div>
+
+    <button type="submit"
+            class="w-full py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition">
+      {{ user and "Update" or "Add" }}
+    </button>
+  </form>
+</div>
+{% endblock %}

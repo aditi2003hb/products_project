@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8">
+  <h2 class="text-2xl font-semibold mb-4">Login User</h2>
+  {% if registered %}
+    <div class="mb-4 p-4 bg-green-100 text-green-800 rounded">
+      Registered! Your UUID: <code class="font-mono">{{ registered }}</code>
+    </div>
+  {% endif %}
+  <form method="post" action="/login" class="space-y-4">
+    <div>
+      <label class="block text-sm font-medium mb-1">UUID</label>
+      <input type="text" name="uu_id" required
+             class="w-full border-gray-300 rounded focus:ring-green-500 focus:border-green-500">
+    </div>
+    <button type="submit"
+            class="w-full py-2 bg-green-600 text-white font-semibold rounded hover:bg-green-700 transition">
+      Login
+    </button>
+  </form>
+  {% if error %}
+    <p class="mt-4 text-red-600">{{ error }}</p>
+  {% endif %}
+</div>
+{% endblock %}
